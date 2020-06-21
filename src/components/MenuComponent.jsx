@@ -7,24 +7,11 @@ import {
     CardBody, 
     CardTitle,
 } from 'reactstrap';
+import DishDetail from './DishdetailComponent';
 
 function Menu(props){
     
     const [selectedDish, setSelectedDish] = React.useState(null);
-
-    function renderDish(dish){
-        if(dish){
-            return(
-                <Card>
-                    <CardImg width = '100%' src = {dish.image} alt = {dish.name}/>
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
-            );
-        }
-    }
 
     const menu = props.dishes.map(dish => {
         return (
@@ -44,9 +31,9 @@ function Menu(props){
             <div className = 'row'>
                 {menu}
             </div>
-            <div className = 'row'>
-                {renderDish(selectedDish)}
-            </div>
+            <DishDetail 
+            selectedDish = {selectedDish}
+            />
         </div>
     );
 }
