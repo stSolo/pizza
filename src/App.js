@@ -17,7 +17,7 @@ function App() {
           </NavbarBrand>
         </div>
       </Navbar>
-      <Menu />
+      <Menu dishes = {dishes} />
     </div>
   );
 }
