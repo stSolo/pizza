@@ -6,6 +6,8 @@ import { DISHES } from './shared/dishes';
 import './App.css';
 
 function App() {
+  const [dishes, setDishes] = React.useState([...DISHES]);
+
   return (
     <div className="App">
       <Navbar dark color = 'primary'>
