@@ -2,7 +2,6 @@ import React from 'react';
 import { 
     Card, 
     CardImg, 
-    CardImgOverlay, 
     CardText, 
     CardBody, 
     CardTitle,
@@ -33,7 +32,7 @@ function DishDetail(props){
                     return (
                     <ListGroup>
                         <ListGroupItem color = 'success'>{comment.comment}</ListGroupItem>
-                        <ListGroupItem>{comment.author} {comment.date}</ListGroupItem>
+                        <ListGroupItem>{comment.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</ListGroupItem>
                     </ListGroup>
                     );
                 })]
