@@ -7,7 +7,10 @@ import {
     CardTitle,
     ListGroup,
     ListGroupItem,
+    Breadcrumb, 
+    BreadcrumbItem,
 } from 'reactstrap';
+import { Link } from '@reach/router';
 
 function DishDetail(props){
     function renderDish(dish){
@@ -42,15 +45,27 @@ function DishDetail(props){
     }
 
     return (
-        <div className = 'row'>
-            <div className = 'col-12 col-md-5 m-1'>
-                {renderDish(props.selectedDish)}
+        <div className = 'container'>
+            <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="../">Menu</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>{props.dish.name}</h3>
+                    <hr />
+                </div>                
             </div>
-            <div className = 'col-12 col-md-5 m-1'>
-                <h4>Comments</h4>
-                <ListGroup>
-                    {renderComments(props.selectedDish?.comments)}
-                </ListGroup>
+            <div className = 'row'>
+                <div className = 'col-12 col-md-5 m-1'>
+                    {renderDish(props.dish)}
+                </div>
+                <div className = 'col-12 col-md-5 m-1'>
+                    <h4>Comments</h4>
+                    <ListGroup>
+                        {renderComments(props.comments)}
+                    </ListGroup>
+                </div>
             </div>
         </div>
     );
