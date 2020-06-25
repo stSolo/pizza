@@ -6,6 +6,7 @@ import { Router } from '@reach/router';
 import Contact from './ContactComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
+import MenuRoute from './MenuRoute';
 import Dishdetail from './DishdetailComponent';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
@@ -42,8 +43,10 @@ function Main() {
             promotion={promotions.filter((promo) => promo.featured)[0]}
             leader={leaders.filter((leader) => leader.featured)[0]}
           />
-          <Menu path = 'menu' dishes={dishes} />
-          <DishWithId path = 'menu/:dishId' />
+          <MenuRoute path = 'menu'>
+            <Menu path = '/' dishes={dishes} />
+            <DishWithId path = ':dishId' />
+          </MenuRoute>
           <Contact path = 'contactus' />
           <NotFound default />
         </Router>
