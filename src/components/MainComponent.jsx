@@ -8,6 +8,7 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import MenuRoute from './MenuRoute';
 import Dishdetail from './DishdetailComponent';
+import About from './AboutComponent';
 import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
@@ -48,6 +49,7 @@ function Main() {
             <DishWithId path = ':dishId' />
           </MenuRoute>
           <Contact path = 'contactus' />
+          <About path = 'aboutus' leaders = {leaders} />
           <NotFound default />
         </Router>
         <Footer />
