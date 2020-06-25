@@ -1,6 +1,8 @@
 import React from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+import Home from './HomeComponent';
 import Menu from './MenuComponent';
+import NotFound from './NotFound';
+import { Router } from '@reach/router';
 import DishDetail from './DishdetailComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
@@ -18,8 +20,11 @@ function Main() {
     return (
       <div>
         <Header />
-        <Menu dishes={dishes} onClick={(dishId) => onDishSelect(dishId)} />
-        <DishDetail dish={dishes.filter((dish) => dish.id === selectedDish)[0]} />
+        <Router>
+          <Home path = '/' />
+          <Menu path = 'menu' dishes={dishes} onClick={(dishId) => onDishSelect(dishId)} />
+          <NotFound default />
+        </Router>
         <Footer />
       </div>
     );
