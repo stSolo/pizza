@@ -7,6 +7,7 @@ import { Breadcrumb,
         Label, 
         Input,
         Col,
+        FormFeedback,
     } from 'reactstrap';
 import { Link } from '@reach/router';
 
@@ -18,8 +19,17 @@ function Contact(props) {
             email: '',
             agree: false,
             contactType: 'Tel.',
-            message: ''
-    })
+            message: '',
+            touched: {
+                firstname: false,
+                lastname: false,
+                telnum: false,
+                email: false,
+            },
+    });
+
+    const errors = validate(state.firstname, state.lastname, state.telnum, state.email);
+
     function handleInputChange(event) {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -36,6 +46,45 @@ function Contact(props) {
         alert('Current State is: ' + JSON.stringify(state));
         event.preventDefault();
     }
+
+    const handleBlur = (field) => {
+        setState({
+            ...state,
+            touched: {...state.touched, [field]: true},
+        });
+    }
+
+    function validate(firstname, lastname, telnum, email){
+        const errors = {
+            firstname: '',
+            lastname: '',
+            telnum: '',
+            email: '',
+        };
+
+        if(state.touched.firstname && firstname.length < 3){
+            errors.firstname = 'Name must be a greater then 3 chars'
+        } else if (state.touched.firstname && firstname.length > 10){
+            errors.firstname = 'Name must be a lesser then 10 chars'
+        }
+
+        if(state.touched.lastname && lastname.length < 3){
+            errors.lastname = 'Last Name must be a greater then 3 chars'
+        } else if (state.touched.lastname && lastname.length > 10){
+            errors.lastname = 'Last Name must be a lesser then 10 chars'
+        }
+
+        const reg = /^\d+$/;
+        if(state.touched.telnum && !reg.test(state.telnum)){
+            errors.telnum = 'Tel is Incorrect!';
+        }
+
+        if(state.touched.email && email.length < 10){
+            errors.email = 'Incorrect Email';
+        }
+
+        return errors
+    };
 
     return(
         <div className="container">
@@ -87,7 +136,11 @@ function Contact(props) {
                                     <Input type="text" id="firstname" name="firstname"
                                         placeholder="First Name"
                                         value={state.firstname}
+                                        valid={errors.firstname === ''}
+                                        invalid={errors.firstname !== ''}
+                                        onBlur={() => handleBlur('firstname')}
                                         onChange={handleInputChange} />
+                                    <FormFeedback>{errors.firstname}</FormFeedback>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -96,16 +149,24 @@ function Contact(props) {
                                     <Input type="text" id="lastname" name="lastname"
                                         placeholder="Last Name"
                                         value={state.lastname}
+                                        valid={errors.lastname === ''}
+                                        invalid={errors.lastname !== ''}
+                                        onBlur={() => handleBlur('lastname')}
                                         onChange={handleInputChange} />
-                                </Col>                        
+                                    <FormFeedback>{errors.lastname}</FormFeedback>
+                                </Col>
                             </FormGroup>
                             <FormGroup row>
-                            <Label htmlFor="telnum" md={2}>Contact Tel.</Label>
+                                <Label htmlFor="telnum" md={2}>Contact Tel.</Label>
                                 <Col md={10}>
                                     <Input type="tel" id="telnum" name="telnum"
-                                        placeholder="Tel. number"
+                                        placeholder="Tel. Number"
                                         value={state.telnum}
+                                        valid={errors.telnum === ''}
+                                        invalid={errors.telnum !== ''}
+                                        onBlur={() => handleBlur('telnum')}
                                         onChange={handleInputChange} />
+                                    <FormFeedback>{errors.telnum}</FormFeedback>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -114,44 +175,11 @@ function Contact(props) {
                                     <Input type="email" id="email" name="email"
                                         placeholder="Email"
                                         value={state.email}
+                                        valid={errors.email === ''}
+                                        invalid={errors.email !== ''}
+                                        onBlur={() => handleBlur('email')}
                                         onChange={handleInputChange} />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Col md={{size: 6, offset: 2}}>
-                                    <FormGroup check>
-                                        <Label check>
-                                            <Input type="checkbox"
-                                                name="agree"
-                                                checked={state.agree}
-                                                onChange={handleInputChange} /> {' '}
-                                            <strong>May we contact you?</strong>
-                                        </Label>
-                                    </FormGroup>
-                                </Col>
-                                <Col md={{size: 3, offset: 1}}>
-                                    <Input type="select" name="contactType"
-                                            value={state.contactType}
-                                            onChange={handleInputChange}>
-                                        <option>Tel.</option>
-                                        <option>Email</option>
-                                    </Input>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label htmlFor="message" md={2}>Your Feedback</Label>
-                                <Col md={10}>
-                                    <Input type="textarea" id="message" name="message"
-                                        rows="12"
-                                        value={state.message}
-                                        onChange={handleInputChange}></Input>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Col md={{size: 10, offset: 2}}>
-                                    <Button type="submit" color="primary">
-                                        Send Feedback
-                                    </Button>
+                                    <FormFeedback>{errors.email}</FormFeedback>
                                 </Col>
                             </FormGroup>
                         </Form>
