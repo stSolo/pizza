@@ -9,23 +9,27 @@ import Footer from './FooterComponent';
 import MenuRoute from './MenuRoute';
 import Dishdetail from './DishdetailComponent';
 import About from './AboutComponent';
-import { DISHES } from '../shared/dishes';
-import { COMMENTS } from '../shared/comments';
-import { PROMOTIONS } from '../shared/promotions';
-import { LEADERS } from '../shared/leaders';
+import { connect } from 'react-redux';
 
-function Main() {
-    const dishes = DISHES;
-    const leaders = LEADERS;
-    const promotions = PROMOTIONS;
-    const comments = COMMENTS;
+
+const mapStateToProps = state => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders
+  }
+}
+
+
+function Main(props) {
         
     const [selectedDish, setSeelctedDish] = React.useState(null);
 
     const DishWithId = ({dishId}) => {
       return(
-          <Dishdetail dish={dishes.filter((dish) => dish.id === parseInt(dishId,10))[0]} 
-            comments={comments.filter((comment) => comment.dishId === parseInt(dishId,10))} />
+          <Dishdetail dish={props.dishes.filter((dish) => dish.id === parseInt(dishId,10))[0]} 
+            comments={props.comments.filter((comment) => comment.dishId === parseInt(dishId,10))} />
       );
     };
     
@@ -40,16 +44,16 @@ function Main() {
         <Header />
         <Router>
           <Home path = '/' 
-            dish={dishes.filter((dish) => dish.featured)[0]}
-            promotion={promotions.filter((promo) => promo.featured)[0]}
-            leader={leaders.filter((leader) => leader.featured)[0]}
+            dish={props.dishes.filter((dish) => dish.featured)[0]}
+            promotion={props.promotions.filter((promo) => promo.featured)[0]}
+            leader={props.leaders.filter((leader) => leader.featured)[0]}
           />
           <MenuRoute path = 'menu'>
-            <Menu path = '/' dishes={dishes} />
+            <Menu path = '/' dishes={props.dishes} />
             <DishWithId path = ':dishId' />
           </MenuRoute>
           <Contact path = 'contactus' />
-          <About path = 'aboutus' leaders = {leaders} />
+          <About path = 'aboutus' leaders = {props.leaders} />
           <NotFound default />
         </Router>
         <Footer />
@@ -57,4 +61,4 @@ function Main() {
     );
 }
 
-export default Main;
+export default connect(mapStateToProps)(Main);
