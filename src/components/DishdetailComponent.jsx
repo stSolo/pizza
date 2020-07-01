@@ -12,8 +12,18 @@ import {
     Button,
 } from 'reactstrap';
 import { Link } from '@reach/router';
+import CommentForm from './CommentForm';
 
 function DishDetail(props){
+    const [isCommentFormOpen, setCommentFormOpen] = React.useState(false);
+
+    function toogleCommentForm(e){
+        e.preventDefault();
+        setCommentFormOpen(!isCommentFormOpen);
+    };
+    
+    
+    
     function renderDish(dish){
         if(dish){
             return(
@@ -66,7 +76,11 @@ function DishDetail(props){
                     <ListGroup>
                         {renderComments(props.comments)}
                     </ListGroup>
-                    <Button outline className = "mt-5"><span className="fa fa-edit fa-lg"></span> Add a Comment</Button>
+                    <Button outline className = "mt-5" onClick = {toogleCommentForm}><span className="fa fa-edit fa-lg"></span> Add a Comment</Button>
+                    <CommentForm 
+                    isOpen = {isCommentFormOpen}
+                    toogle = {toogleCommentForm}
+                    />
                 </div>
             </div>
         </div>
