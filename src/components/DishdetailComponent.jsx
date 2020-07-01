@@ -9,6 +9,7 @@ import {
     ListGroupItem,
     Breadcrumb, 
     BreadcrumbItem,
+    Button,
 } from 'reactstrap';
 import { Link } from '@reach/router';
 
@@ -65,6 +66,7 @@ function DishDetail(props){
                     <ListGroup>
                         {renderComments(props.comments)}
                     </ListGroup>
+                    <Button outline className = "mt-5"><span className="fa fa-edit fa-lg"></span> Add a Comment</Button>
                 </div>
             </div>
         </div>
