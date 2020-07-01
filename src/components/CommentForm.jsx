@@ -29,8 +29,8 @@ function CommentForm(props){
         <ModalBody>
             <LocalForm onSubmit={(values) => handleSubmit(values)}>
                 <Row className="form-group">
-                    <Label htmlFor="author" md={2}>Author</Label>
-                    <Col md={10}>
+                    <Label htmlFor="author" md={4}>Author</Label>
+                    <Col md={12}>
                         <Control.text model=".author" id="author" name="author"
                         placeholder="Author"
                         className="form-control"
@@ -51,8 +51,8 @@ function CommentForm(props){
                     </Col>
                 </Row>
                 <Row className="form-group">
-                    <Label htmlFor="rating" md={2}>Rating</Label>
-                    <Col md={{size: 3, offset: 1}}>
+                    <Label htmlFor="rating" md={4}>Rating</Label>
+                    <Col md={12}>
                         <Control.select model=".rating" name="rating"
                         className="form-control">
                                 <option>1</option>
@@ -64,15 +64,15 @@ function CommentForm(props){
                     </Col>
                 </Row>
                 <Row className="form-group">
-                    <Label htmlFor="comment" md={2}>Your Comment</Label>
-                    <Col md={10}>
+                    <Label htmlFor="comment" md={4}>Your Comment</Label>
+                    <Col md={12}>
                         <Control.textarea model=".comment" id="comment" name="comment"
                         rows="6"
                         className="form-control" />
                     </Col>
                 </Row>
                 <Row className="form-group">
-                    <Col md={{size:10, offset: 2}}>
+                    <Col md={12}>
                         <Button type="submit" color="primary">
                             Add a comment
                         </Button>
