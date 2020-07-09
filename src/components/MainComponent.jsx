@@ -9,6 +9,7 @@ import Footer from './FooterComponent';
 import MenuRoute from './MenuRoute';
 import Dishdetail from './DishdetailComponent';
 import About from './AboutComponent';
+import { addComment } from '../redux/actionCreator';
 import { connect } from 'react-redux';
 
 
@@ -21,6 +22,13 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+
+});
+
+
 
 function Main(props) {
         
@@ -29,7 +37,9 @@ function Main(props) {
     const DishWithId = ({dishId}) => {
       return(
           <Dishdetail dish={props.dishes.filter((dish) => dish.id === parseInt(dishId,10))[0]} 
-            comments={props.comments.filter((comment) => comment.dishId === parseInt(dishId,10))} />
+            comments={props.comments.filter((comment) => comment.dishId === parseInt(dishId,10))} 
+            addComment={props.addComment}
+            />
       );
     };
     
@@ -61,4 +71,4 @@ function Main(props) {
     );
 }
 
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

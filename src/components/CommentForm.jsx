@@ -19,7 +19,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
 function CommentForm(props){
     
     function handleSubmit(v){
-        alert(JSON.stringify(v));
+        props.addComment(props.dishId, v.rating, v.author, v.comment);
         props.toggle();
     };
     
@@ -54,6 +54,7 @@ function CommentForm(props){
                     <Label htmlFor="rating" md={4}>Rating</Label>
                     <Col md={12}>
                         <Control.select model=".rating" name="rating"
+                        defaultValue = "1"
                         className="form-control">
                                 <option>1</option>
                                 <option>2</option>

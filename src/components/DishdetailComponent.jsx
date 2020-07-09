@@ -18,7 +18,9 @@ function DishDetail(props){
     const [isCommentFormOpen, setCommentFormOpen] = React.useState(false);
 
     function toggleCommentForm(e){
-        e.preventDefault();
+        if(e){
+            e.preventDefault();
+        }
         setCommentFormOpen(!isCommentFormOpen);
     };
     
@@ -80,6 +82,8 @@ function DishDetail(props){
                     <CommentForm 
                     isOpen = {isCommentFormOpen}
                     toggle = {toggleCommentForm}
+                    addComment = {props.addComment} 
+                    dishId = {props.dish.id}
                     />
                 </div>
             </div>
