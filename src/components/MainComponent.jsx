@@ -11,6 +11,7 @@ import Dishdetail from './DishdetailComponent';
 import About from './AboutComponent';
 import { addComment, fetchDishes } from '../redux/actionCreator';
 import { connect } from 'react-redux';
+import { actions } from 'react-redux-form';
 
 
 const mapStateToProps = state => {
@@ -25,7 +26,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   
   addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-  fetchDishes: () => { dispatch(fetchDishes())}
+  fetchDishes: () => { dispatch(fetchDishes())},
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
 
 });
 
@@ -73,7 +75,7 @@ function Main(props) {
             <Menu path = '/' dishes={props.dishes} />
             <DishWithId path = ':dishId' />
           </MenuRoute>
-          <Contact path = 'contactus' />
+          <Contact path = 'contactus' resetFeedbackForm = {props.resetFeedbackForm}/>
           <About path = 'aboutus' leaders = {props.leaders} />
           <NotFound default />
         </Router>
