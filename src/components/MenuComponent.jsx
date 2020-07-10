@@ -9,13 +9,34 @@ import {
 } from 'reactstrap';
 import { Link } from '@reach/router';
 import DishDetail from './DishdetailComponent';
+import Loading from './LoadingComponent';
 
 function Menu(props){
     
     const [selectedDish, setSelectedDish] = React.useState(null);
 
-    const menu = props.dishes.map(dish => {
-        return (
+    const menu = props.dishes.dishes.map(dish => {
+        if (props.dishes.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (props.dishes.errMess) {
+            return(
+                <div className="container">
+                    <div className="row"> 
+                        <div className="col-12">
+                            <h4>{props.dishes.errMess}</h4>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        else return (
             <div key = {dish.id} className = 'col-12 col-md-5 m-1'>
                 <Card>
                     <Link to={`${dish.id}`} >

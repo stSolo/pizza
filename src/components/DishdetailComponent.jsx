@@ -11,6 +11,7 @@ import {
     BreadcrumbItem,
     Button,
 } from 'reactstrap';
+import Loading from './LoadingComponent';
 import { Link } from '@reach/router';
 import CommentForm from './CommentForm';
 
@@ -27,7 +28,25 @@ function DishDetail(props){
     
     
     function renderDish(dish){
-        if(dish){
+        if (props.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (props.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{props.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if(dish !== null){
             return(
                 <Card>
                     <CardImg width = '100%' src = {dish.image} alt = {dish.name}/>
@@ -62,10 +81,10 @@ function DishDetail(props){
             <div className="row">
                 <Breadcrumb>
                     <BreadcrumbItem><Link to="../">Menu</Link></BreadcrumbItem>
-                    <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                    <BreadcrumbItem active>{props.dish?.name}</BreadcrumbItem>
                 </Breadcrumb>
                 <div className="col-12">
-                    <h3>{props.dish.name}</h3>
+                    <h3>{props.dish?.name}</h3>
                     <hr />
                 </div>                
             </div>
@@ -83,7 +102,7 @@ function DishDetail(props){
                     isOpen = {isCommentFormOpen}
                     toggle = {toggleCommentForm}
                     addComment = {props.addComment} 
-                    dishId = {props.dish.id}
+                    dishId = {props.dish?.id}
                     />
                 </div>
             </div>

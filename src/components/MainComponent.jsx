@@ -9,7 +9,7 @@ import Footer from './FooterComponent';
 import MenuRoute from './MenuRoute';
 import Dishdetail from './DishdetailComponent';
 import About from './AboutComponent';
-import { addComment } from '../redux/actionCreator';
+import { addComment, fetchDishes } from '../redux/actionCreator';
 import { connect } from 'react-redux';
 
 
@@ -24,7 +24,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   
-  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+  addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+  fetchDishes: () => { dispatch(fetchDishes())}
 
 });
 
@@ -34,9 +35,17 @@ function Main(props) {
         
     const [selectedDish, setSeelctedDish] = React.useState(null);
 
+    React.useEffect(
+      () => {
+        props.fetchDishes();
+      }
+      ,[])
+
     const DishWithId = ({dishId}) => {
       return(
-          <Dishdetail dish={props.dishes.filter((dish) => dish.id === parseInt(dishId,10))[0]} 
+          <Dishdetail dish={props.dishes.dishes.filter((dish) => dish.id === parseInt(dishId,10))[0]} 
+            isLoading={props.dishes.isLoading}
+            errMess={props.dishes.errMess}
             comments={props.comments.filter((comment) => comment.dishId === parseInt(dishId,10))} 
             addComment={props.addComment}
             />
@@ -54,7 +63,9 @@ function Main(props) {
         <Header />
         <Router>
           <Home path = '/' 
-            dish={props.dishes.filter((dish) => dish.featured)[0]}
+            dish={props.dishes.dishes.filter((dish) => dish.featured)[0]}
+            dishesLoading={props.dishes.isLoading}
+            dishesErrMess={props.dishes.errMess}
             promotion={props.promotions.filter((promo) => promo.featured)[0]}
             leader={props.leaders.filter((leader) => leader.featured)[0]}
           />
