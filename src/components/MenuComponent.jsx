@@ -10,6 +10,7 @@ import {
 import { Link } from '@reach/router';
 import DishDetail from './DishdetailComponent';
 import Loading from './LoadingComponent';
+import baseUrl from '../shared/baseUrl';
 
 function Menu(props){
     
@@ -40,7 +41,7 @@ function Menu(props){
             <div key = {dish.id} className = 'col-12 col-md-5 m-1'>
                 <Card>
                     <Link to={`${dish.id}`} >
-                        <CardImg width = '100%' src = {dish.image} alt = {dish.name}/>
+                        <CardImg width = '100%' src = {baseUrl + dish.image} alt = {dish.name}/>
                         <CardImgOverlay body className = 'ml-5'>
                             <CardTitle>{dish.name}</CardTitle>
                         </CardImgOverlay>
