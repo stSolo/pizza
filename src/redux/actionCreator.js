@@ -16,7 +16,7 @@ export const fetchDishes = () => (dispatch) => {
 
     dispatch(dishesLoading(true));
 
-    return fetch(baseUrl + 'dishes')
+    return fetch(baseUrl + 'dishees')
     .then(response => {
         if (response.ok) {
           return response;
