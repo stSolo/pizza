@@ -2,7 +2,7 @@ import React from 'react';
 import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import NotFound from './NotFound';
-import { Router } from '@reach/router';
+import { Router, Location } from '@reach/router';
 import Contact from './ContactComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
@@ -12,6 +12,7 @@ import About from './AboutComponent';
 import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/actionCreator';
 import { connect } from 'react-redux';
 import { actions } from 'react-redux-form';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 const mapStateToProps = state => {
@@ -67,6 +68,10 @@ function Main(props) {
     return (
       <div>
         <Header />
+        <Location>
+        {({ location }) => (
+        <TransitionGroup>
+        <CSSTransition key={location.key} classNames="page" timeout={300}>
         <Router>
           <Home path = '/' 
             dish={props.dishes.dishes.filter((dish) => dish.featured)[0]}
@@ -83,6 +88,10 @@ function Main(props) {
           <About path = 'aboutus' leaders = {props.leaders} />
           <NotFound default />
         </Router>
+        </CSSTransition>
+        </TransitionGroup>
+            )}
+        </Location>
         <Footer />
       </div>
     );
