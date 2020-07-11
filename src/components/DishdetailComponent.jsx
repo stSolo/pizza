@@ -15,6 +15,7 @@ import Loading from './LoadingComponent';
 import { Link } from '@reach/router';
 import CommentForm from './CommentForm';
 import baseUrl from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 function DishDetail(props){
     const [isCommentFormOpen, setCommentFormOpen] = React.useState(false);
@@ -49,6 +50,11 @@ function DishDetail(props){
         }
         else if(dish !== null){
             return(
+                <FadeTransform
+                in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
                 <Card>
                     <CardImg width = '100%' src = {baseUrl + dish.image} alt = {dish.name}/>
                     <CardBody>
@@ -56,6 +62,7 @@ function DishDetail(props){
                         <CardText>{dish.description}</CardText>
                     </CardBody>
                 </Card>
+                </FadeTransform>
             );
         }
         return (<div></div>)
@@ -66,10 +73,12 @@ function DishDetail(props){
             return (
                 [...comments.map(comment => {
                     return (
+                    <Fade in>
                     <ListGroup>
                         <ListGroupItem color = 'success'>{comment.comment}</ListGroupItem>
                         <ListGroupItem>{comment.author} {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</ListGroupItem>
                     </ListGroup>
+                    </Fade>
                     );
                 })]
             );
@@ -95,9 +104,11 @@ function DishDetail(props){
                 </div>
                 <div className = 'col-12 col-md-5 m-1'>
                     <h4>Comments</h4>
+                    <Stagger in>
                     <ListGroup>
                         {renderComments(props.comments)}
                     </ListGroup>
+                    </Stagger>
                     <Button outline className = "mt-5" onClick = {toggleCommentForm}><span className="fa fa-edit fa-lg"></span> Add a Comment</Button>
                     <CommentForm 
                     isOpen = {isCommentFormOpen}
